@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { Yerdauit } from './pages/yerdauit/y'
 import { Home } from './pages/home/home';
 import { About } from './pages/about/about';
 import { Albums } from './pages/albums/albums';
@@ -6,11 +7,11 @@ import { AlbumDetail } from './pages/album-detail/album-detail';
 import { AlbumPhotos } from './pages/album-photos/album-photos';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'y', component: Yerdauit },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: Home },
   { path: 'about', component: About },
   { path: 'albums', component: Albums },
   { path: 'albums/:id', component: AlbumDetail },
   { path: 'albums/:id/photos', component: AlbumPhotos },
-  { path: '**', redirectTo: '/home' }
 ];
