@@ -1,11 +1,33 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from .models import *
-# /api/categories/
+from rest_framework import viewsets
+from .serializers import *
+from rest_framework.decorators import action
 
-# /api/categories/<int:id>/
 
-# /api/categories/<int:id>/products/
+# /api/categories/<id>/products/
+class ProductViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    @action(detail=True, methods=["get"], url_path="products")
+    def products(self, request, pk=None):
+        category = self.get_object()
+        products = Product.objects.filter(category=category)
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
 
 def get_products(request):
     products = Product.objects.all().values()
